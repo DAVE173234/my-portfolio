@@ -57,7 +57,7 @@ export default function Computer({
             initial={reduce ? false : { scaleY: 0.02, opacity: 0 }}
             animate={inView || reduce ? { scaleY: 1, opacity: 1 } : undefined}
             transition={{ delay: 0.9, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="relative origin-center bg-ink font-mono shadow-[inset_0_0_40px_rgba(255,255,255,0.06)]"
+            className="relative origin-center bg-[#0f0f0f] font-mono shadow-[inset_0_0_40px_rgba(255,255,255,0.06)]"
           >
             {/* scanlines */}
             <div
@@ -77,12 +77,12 @@ export default function Computer({
               <span className="h-2 w-2 rounded-full bg-white/50" />
               <span className="h-2 w-2 rounded-full bg-white/30" />
               <span className="h-2 w-2 rounded-full bg-white/20" />
-              <span className="ml-3 text-[11px] text-smoke">{fileName}</span>
+              <span className="ml-3 text-[11px] text-[#b9b9b6]">{fileName}</span>
             </div>
 
             {/* content */}
-            <div className="relative p-5 text-[13px] leading-relaxed text-chalk sm:p-8 sm:text-base">
-              <p aria-hidden="true" className="text-smoke">
+            <div className="relative p-5 text-[13px] leading-relaxed text-white sm:p-6 sm:text-[13px]">
+              <p aria-hidden="true" className="text-[#b9b9b6]">
                 $ cat {fileName}
               </p>
 
@@ -93,7 +93,7 @@ export default function Computer({
                   <span className="invisible">{text}</span>
                   <span className="absolute inset-0">
                     {typed}
-                    <span className="ml-0.5 inline-block h-[1em] w-[0.5em] translate-y-[0.15em] animate-pulse bg-chalk motion-reduce:animate-none" />
+                    <span className="ml-0.5 inline-block h-[1em] w-[0.5em] translate-y-[0.15em] animate-pulse bg-white motion-reduce:animate-none" />
                   </span>
                 </span>
               </p>
@@ -103,10 +103,10 @@ export default function Computer({
 
         {/* chin */}
         <div className="mt-3 flex items-center justify-between px-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-ink/50">
+          <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-black/50">
             Dacillo
           </span>
-          <span className="h-1.5 w-1.5 rounded-full bg-ink/70" />
+          <span className="h-1.5 w-1.5 rounded-full bg-black/70" />
         </div>
       </div>
 

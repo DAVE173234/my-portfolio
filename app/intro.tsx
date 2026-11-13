@@ -77,7 +77,7 @@ export default function Intro({
   const cursor = (
     <span
       aria-hidden="true"
-      className="ml-1 inline-block h-[1em] w-[0.5em] translate-y-[0.15em] animate-pulse bg-chalk motion-reduce:animate-none"
+      className="ml-1 inline-block h-[1em] w-[0.5em] translate-y-[0.15em] animate-pulse bg-white motion-reduce:animate-none"
     />
   );
 
@@ -117,7 +117,7 @@ export default function Intro({
         {/* bezel */}
         <div className="rounded-[1.5rem] border border-black/10 bg-gradient-to-b from-[#f4f4f2] to-[#c9c8c4] p-3 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.45)] sm:p-4">
           {/* screen */}
-          <div className="relative flex aspect-[16/10] flex-col justify-center overflow-hidden rounded-xl bg-ink p-6 text-left font-mono shadow-[inset_0_0_40px_rgba(255,255,255,0.06)] sm:p-10">
+          <div className="relative flex aspect-[16/10] flex-col justify-center overflow-hidden rounded-xl bg-[#0f0f0f] p-6 text-left font-mono shadow-[inset_0_0_40px_rgba(255,255,255,0.06)] sm:p-10">
             {/* scanlines */}
             <div
               aria-hidden="true"
@@ -128,19 +128,19 @@ export default function Intro({
               }}
             />
 
-            <p className="relative min-h-[1.5em] text-xs text-smoke sm:text-base">
+            <p className="relative min-h-[1.5em] text-xs text-[#b9b9b6] sm:text-base">
               <span aria-hidden="true">$ </span>
               {typed1}
               {!line1Done && cursor}
             </p>
 
-            <p className="relative mt-4 min-h-[1.2em] text-3xl font-bold tracking-tight text-chalk sm:text-6xl">
+            <p className="relative mt-4 min-h-[1.2em] text-3xl font-bold tracking-tight text-white sm:text-6xl">
               {typed2}
               {line1Done && !ready && cursor}
             </p>
 
             <p
-              className={`relative mt-8 text-xs uppercase tracking-[0.3em] text-smoke sm:text-sm ${
+              className={`relative mt-8 text-xs uppercase tracking-[0.3em] text-[#b9b9b6] sm:text-sm ${
                 ready && !leaving
                   ? "animate-pulse motion-reduce:animate-none"
                   : "opacity-0"
@@ -152,9 +152,10 @@ export default function Intro({
 
           {/* chin */}
           <div className="mt-3 flex items-center justify-between px-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-ink/50">
+            <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-black/50">
+              Dacillo
             </span>
-            <span className="h-1.5 w-1.5 rounded-full bg-ink/70" />
+            <span className="h-1.5 w-1.5 rounded-full bg-black/70" />
           </div>
         </div>
 
