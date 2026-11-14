@@ -7,6 +7,7 @@ import {
   useScroll,
   useSpring,
   useTransform,
+  type Variants,
 } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
@@ -87,7 +88,7 @@ const moreTechCount = allTech.length - featuredTech.length;
 
 const label = "text-xs font-medium uppercase tracking-[0.3em]";
 const sectionTitle =
-  "text-3xl font-bold uppercase leading-none tracking-tighter sm:text-4xl";
+  "text-3xl font-bold uppercase leading-none tracking-tighter sm:text-4xl lg:text-5xl";
 const buttonDark =
   "inline-block bg-ink px-8 py-4 text-xs font-semibold uppercase tracking-[0.15em] text-chalk transition-opacity hover:opacity-80";
 const linkLine =
@@ -172,22 +173,35 @@ function Reveal({
   );
 }
 
-// Section title that slides up from behind a mask when it scrolls into view
+// Text that slides up from behind a mask. The scroll trigger sits on the outer
+// (unclipped) element, so it fires reliably.
+const maskUp: Variants = {
+  hidden: { y: "110%" },
+  show: { y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
+};
+
+const maskUpLate: Variants = {
+  hidden: { y: "110%" },
+  show: {
+    y: 0,
+    transition: { duration: 0.8, delay: 0.12, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
 function Title({ children }: { children: ReactNode }) {
   return (
-    <h2 className={sectionTitle}>
+    <motion.h2
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-60px" }}
+      className={sectionTitle}
+    >
       <span className="block overflow-hidden pb-[0.1em]">
-        <motion.span
-          initial={{ y: "110%" }}
-          whileInView={{ y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="block"
-        >
+        <motion.span variants={maskUp} className="block">
           {children}
         </motion.span>
       </span>
-    </h2>
+    </motion.h2>
   );
 }
 
@@ -204,7 +218,7 @@ function ProjectCard({
     <a href={project.href} className="group block">
       <div
         className={`relative overflow-hidden rounded-xl bg-gradient-to-br from-[#d9d8d4] to-[#b9b8b4] ${
-          wide ? "aspect-[16/9]" : "aspect-[4/3]"
+          wide ? "aspect-[4/3] sm:aspect-[16/9] lg:aspect-[4/3]" : "aspect-[4/3]"
         }`}
       >
         {project.image ? (
@@ -271,9 +285,9 @@ function About() {
     >
       <Title>About me</Title>
 
-      <div className="mt-10 grid items-start gap-8 sm:grid-cols-[200px_1fr]">
+      <div className="mt-10 grid items-start gap-8 md:grid-cols-[260px_1fr]">
         {/* picture holder: the frame grows and an outline slides out as you scroll */}
-        <div className="relative mx-auto w-full max-w-[240px] sm:mx-0">
+        <div className="relative mx-auto w-full max-w-[260px] md:mx-0">
           <motion.div
             aria-hidden="true"
             style={{ x: reduce ? 12 : shift, y: reduce ? 12 : shift }}
@@ -326,17 +340,17 @@ function Portfolio() {
 
       <div className="min-h-screen text-ink">
         {/* everything lives in one centered column with wide side margins */}
-        <div className="mx-auto w-full max-w-[720px] px-5 sm:px-6">
+        <div className="mx-auto w-full max-w-[1240px] px-5 sm:px-8 lg:w-[max(65vw,880px)] lg:px-0">
           <SiteHeader href="#top" />
 
           {/* ============ HOME / INTRODUCTION ============ */}
-          <section id="top" className="scroll-mt-4">
+          <section id="top" className="scroll-mt-4 pb-16">
             <div className="@container relative isolate h-[min(84svh,760px)] min-h-[540px] overflow-hidden rounded-2xl border border-ink/15 bg-gradient-to-b from-hero-from to-hero-to font-mono text-ash">
               {/* paper grain */}
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 z-0 opacity-50 mix-blend-multiply"
-                style={{ backgroundImage: GRAIN }}
+                className="pointer-events-none absolute inset-0 z-0 mix-blend-multiply"
+                style={{ backgroundImage: GRAIN, opacity: "var(--hero-grain)" }}
               />
 
               {/* soft white clouds drifting in the background */}
@@ -387,9 +401,9 @@ function Portfolio() {
                   delay: 1.6,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className="absolute right-[6%] top-[8%] z-20 max-w-[80%] @md:max-w-[60%] @md:text-right"
+                className="absolute right-[6%] top-[8%] z-20 max-w-[80%] @md:max-w-[420px] @md:text-right"
               >
-                <blockquote className="text-xs leading-relaxed text-ink/80 @md:text-sm">
+                <blockquote className="text-xs leading-relaxed text-ink/90 @md:text-sm @3xl:text-base">
                   “A little one shall become a thousand, and a small one a
                   strong nation: I the LORD will hasten it in his time.”
                 </blockquote>
@@ -399,8 +413,8 @@ function Portfolio() {
               </motion.figure>
 
               {/* your name as the title */}
-              <div className="absolute left-[6%] top-[34%] z-20">
-                <h1 className="text-[11cqw] font-bold leading-none tracking-tight">
+              <div className="absolute left-[6%] top-[38%] z-20">
+                <h1 className="text-[11cqw] font-bold leading-none tracking-tight text-ink">
                   <span className="sr-only">{NAME}</span>
                   <span aria-hidden="true">
                     {NAME.split(" ").map((word, wi, words) => {
@@ -422,7 +436,7 @@ function Portfolio() {
                               </motion.span>
                             ))}
                             {wi === words.length - 1 && (
-                              <span className="ml-1 inline-block h-[0.75em] w-[0.4em] translate-y-[0.05em] animate-pulse bg-ash motion-reduce:animate-none" />
+                              <span className="ml-1 inline-block h-[0.75em] w-[0.4em] translate-y-[0.05em] animate-pulse bg-ink motion-reduce:animate-none" />
                             )}
                           </span>
                           {wi < words.length - 1 ? " " : null}
@@ -490,7 +504,6 @@ function Portfolio() {
           </section>
 
           {/* ============ ABOUT ME ============ */}
-          <div className="mt-16" />
           <About />
 
           {/* ============ TECHNICAL SKILLS (summary) ============ */}
@@ -500,25 +513,22 @@ function Portfolio() {
           >
             <Title>Technical skills</Title>
 
-            <Reveal delay={0.1}>
-              <p className="mt-5 max-w-md text-ink/80">
-                The technologies I use to build web applications, from the
-                interface to the database.
-              </p>
-            </Reveal>
+            <div className="mt-10 grid gap-8 md:grid-cols-[minmax(0,300px)_1fr]">
+              <Reveal delay={0.1}>
+                <p className="text-ink/80">
+                  The technologies I use to build web applications, from the
+                  interface to the database.
+                </p>
+                <Link
+                  href="/tech-stack"
+                  className={`${linkLine} mt-6 inline-block`}
+                >
+                  View full tech stack →
+                </Link>
+              </Reveal>
 
-            <div className="mt-8">
               <TechChips items={featuredTech} moreCount={moreTechCount} />
             </div>
-
-            <Reveal delay={0.2}>
-              <Link
-                href="/tech-stack"
-                className={`${linkLine} mt-10 inline-block`}
-              >
-                View full tech stack →
-              </Link>
-            </Reveal>
           </section>
 
           {/* ============ PROJECTS / MY WORKS ============ */}
@@ -545,9 +555,12 @@ function Portfolio() {
               </a>
             </div>
 
-            <ul className="mt-10 grid gap-8 sm:grid-cols-2">
+            <ul className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {projects.map((project, i) => (
-                <li key={project.title} className={i === 0 ? "sm:col-span-2" : ""}>
+                <li
+                  key={project.title}
+                  className={i === 0 ? "sm:col-span-2 lg:col-span-1" : ""}
+                >
                   <Reveal delay={i * 0.12}>
                     <ProjectCard project={project} index={i} wide={i === 0} />
                   </Reveal>
@@ -567,7 +580,7 @@ function Portfolio() {
               {education.map((item) => (
                 <li key={item.degree} className="border-t border-ink/40">
                   <Reveal>
-                    <div className="group -mx-4 grid gap-3 px-4 py-8 transition-colors duration-300 hover:bg-ink hover:text-chalk sm:grid-cols-[130px_1fr]">
+                    <div className="group -mx-4 grid gap-3 px-4 py-8 transition-colors duration-300 hover:bg-ink hover:text-chalk sm:grid-cols-[200px_1fr]">
                       <p className="text-sm font-semibold uppercase tracking-[0.1em]">
                         {item.period}
                       </p>
@@ -605,7 +618,7 @@ function Portfolio() {
                   className="border-t border-ink/40"
                 >
                   <Reveal>
-                    <div className="group -mx-4 grid gap-3 px-4 py-8 transition-colors duration-300 hover:bg-ink hover:text-chalk sm:grid-cols-[130px_1fr]">
+                    <div className="group -mx-4 grid gap-3 px-4 py-8 transition-colors duration-300 hover:bg-ink hover:text-chalk sm:grid-cols-[200px_1fr]">
                       <p className="text-sm font-semibold uppercase tracking-[0.1em]">
                         {item.period}
                       </p>
@@ -635,39 +648,28 @@ function Portfolio() {
             className="scroll-mt-4 border-t border-ink/20 py-16"
           >
             <p className={label}>Contact me</p>
-            <h2 className="mt-5 text-4xl font-bold uppercase leading-[0.95] tracking-tighter sm:text-5xl">
+            <motion.h2
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+              className="mt-5 text-4xl font-bold uppercase leading-[0.95] tracking-tighter sm:text-6xl lg:text-7xl"
+            >
               <span className="block overflow-hidden pb-[0.08em]">
-                <motion.span
-                  initial={{ y: "110%" }}
-                  whileInView={{ y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                  className="block"
-                >
+                <motion.span variants={maskUp} className="block">
                   Let&apos;s work
                 </motion.span>
               </span>
               <span className="block overflow-hidden pb-[0.08em]">
-                <motion.span
-                  initial={{ y: "110%" }}
-                  whileInView={{ y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{
-                    duration: 0.8,
-                    delay: 0.12,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                  className="block"
-                >
+                <motion.span variants={maskUpLate} className="block">
                   together
                 </motion.span>
               </span>
-            </h2>
+            </motion.h2>
 
             <Reveal delay={0.2}>
               <a
                 href={`mailto:${EMAIL}`}
-                className="group mt-10 flex items-center justify-between gap-6 border-y border-ink/40 py-5 text-lg font-medium transition-colors hover:bg-ink/5 sm:text-2xl"
+                className="group mt-10 flex items-center justify-between gap-6 border-y border-ink/40 py-5 text-lg font-medium transition-colors hover:bg-ink/5 sm:text-3xl"
               >
                 <span className="break-all">{EMAIL}</span>
                 <span
@@ -695,7 +697,7 @@ function Portfolio() {
           </section>
 
           <footer className="border-t border-ink/20 py-8 text-xs uppercase tracking-[0.15em] text-ash">
-            © {new Date().getFullYear()} {NAME}. Built with Next.js.
+            © 2026 {NAME}. Built with Next.js.
           </footer>
         </div>
       </div>
