@@ -39,7 +39,10 @@ export const techGroups: TechGroup[] = [
   },
   {
     title: "Databases",
-    items: [{ name: "MySQL", slugs: ["mysql"], featured: true }],
+    items: [
+      { name: "MySQL", slugs: ["mysql"], featured: true },
+      { name: "PostgreSQL", slugs: ["postgresql"] },
+    ],
   },
   {
     title: "Tools & Deployment",

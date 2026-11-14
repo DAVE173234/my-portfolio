@@ -511,22 +511,21 @@ function Portfolio() {
             id="skills"
             className="scroll-mt-4 border-t border-ink/20 py-16"
           >
-            <Title>Technical skills</Title>
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <Reveal delay={0.1}>
+                  <p className="mt-2  text-ink/70">
+                    The technologies I use to build web applications, from the
+                    interface to the database.
+                  </p>
+                </Reveal>
+              </div>
+              <Link href="/tech-stack" className={linkLine}>
+                View full →
+              </Link>
+            </div>
 
-            <div className="mt-10 grid gap-8 md:grid-cols-[minmax(0,300px)_1fr]">
-              <Reveal delay={0.1}>
-                <p className="text-ink/80">
-                  The technologies I use to build web applications, from the
-                  interface to the database.
-                </p>
-                <Link
-                  href="/tech-stack"
-                  className={`${linkLine} mt-6 inline-block`}
-                >
-                  View full tech stack →
-                </Link>
-              </Reveal>
-
+            <div className="mt-10">
               <TechChips items={featuredTech} moreCount={moreTechCount} />
             </div>
           </section>

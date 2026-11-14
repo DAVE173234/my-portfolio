@@ -22,7 +22,7 @@ const item: Variants = {
 };
 
 const chipClass =
-  "group inline-flex items-center gap-2 rounded-md border border-ink/30 bg-ink/5 px-4 py-2 font-mono text-sm font-semibold text-ink transition-colors duration-200 hover:bg-ink hover:text-chalk";
+  "group inline-flex items-center gap-2 rounded-md border border-ink/30 bg-ink/5 px-4 py-2 text-sm font-medium text-ink transition-colors duration-200 hover:bg-ink hover:text-chalk";
 
 // Plain </> icon, used when a technology has no logo
 function CodeGlyph() {
@@ -99,7 +99,7 @@ export function TechChips({
         <motion.li variants={item}>
           <Link
             href="/tech-stack"
-            className="inline-flex items-center rounded-md border border-dashed border-ink/50 px-4 py-2 font-mono text-sm font-semibold text-ink transition-colors duration-200 hover:bg-ink hover:text-chalk"
+            className="inline-flex items-center rounded-md border border-dashed border-ink/50 px-4 py-2 text-sm font-medium text-ink transition-colors duration-200 hover:bg-ink hover:text-chalk"
           >
             +{moreCount} more
           </Link>
@@ -109,14 +109,17 @@ export function TechChips({
   );
 }
 
-// The full page: every group with its label and chips
+// The full page: one row per group, label on the left and chips on the right
 export function TechGroups({ groups }: { groups: TechGroup[] }) {
   return (
     <MotionConfig reducedMotion="user">
-      <div className="mt-14 space-y-14">
+      <div className="border-b border-ink/20">
         {groups.map((group) => (
-          <section key={group.title}>
-            <h2 className="mb-5 text-xs font-bold uppercase tracking-[0.15em] text-ash">
+          <section
+            key={group.title}
+            className="grid gap-4 border-t border-ink/20 py-8 md:grid-cols-[220px_1fr]"
+          >
+            <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-ash">
               {group.title}
             </h2>
             <TechChips items={group.items} />
