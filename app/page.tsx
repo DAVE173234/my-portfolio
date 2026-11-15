@@ -15,18 +15,16 @@ import Computer from "./computer";
 import Intro from "./intro";
 import SiteHeader from "./site-header";
 import { TechChips } from "./tech-chip";
+import { GITHUB, GITHUB_HANDLE, LINKEDIN } from "./site-config";
 import { techGroups } from "./tech-data";
 
 // ---------- EDIT YOUR CONTENT HERE ----------
 const NAME = "Dave Dacillo";
-const EMAIL = "you@example.com";
-const GITHUB = "https://github.com/DAVE173234";
-const GITHUB_HANDLE = "@DAVE173234";
-const LINKEDIN = "https://www.linkedin.com/in/frenz-dave-dacillo-97970241a/"; // replace with your LinkedIn link
 const PHOTO = "/dave.jpg"; // your photo, saved in the public folder (used in About me)
 
 // About Me (one paragraph)
-const aboutText = `I’m ${NAME}, an aspiring full-stack web developer dedicated to building efficient, user-focused web applications. Alongside honing my skills in end-to-end web technologies, I actively explore the field of cybersecurity as an enthusiast.` ;
+const aboutText = `I’m ${NAME}, an aspiring full-stack web developer dedicated to building efficient, user-focused web applications. Alongside honing my skills in end-to-end web technologies, I actively explore the field of cybersecurity as an enthusiast.`;
+
 // Projects / My Works
 const projects = [
   {
@@ -53,29 +51,25 @@ const projects = [
   },
 ];
 
-// Education
-const education = [
+// Certifications (copy a block to add more)
+const certifications = [
   {
-    degree: "Bachelor of Science in Information Technology",
-    school: "Your school name",
-    period: "20XX - Present",
-    details: ["Add your major, relevant coursework, or honors."],
-  },
-];
-
-// Experience
-const experience = [
-  {
-    role: "Full-stack developer",
-    org: "Capstone project: Learning Management System",
-    period: "2026",
-    points: ["Building student and faculty portals with React and Laravel."],
+    title: "Certification name",
+    issuer: "Issuing organization",
+    year: "20XX",
+    href: "#", // link to the certificate, if you have one
   },
   {
-    role: "Your role",
-    org: "Company or organization",
-    period: "20XX - 20XX",
-    points: ["Add what you did and the result."],
+    title: "Certification name",
+    issuer: "Issuing organization",
+    year: "20XX",
+    href: "#",
+  },
+  {
+    title: "Certification name",
+    issuer: "Issuing organization",
+    year: "20XX",
+    href: "#",
   },
 ];
 // --------------------------------------------
@@ -131,22 +125,6 @@ function LinkedInIcon() {
     >
       <span className="text-[9px] font-bold leading-none text-hero-to">in</span>
     </span>
-  );
-}
-
-function MailIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-      className="h-4 w-4"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-    >
-      <rect x="3" y="5" width="18" height="14" rx="2" />
-      <path d="m3 7 9 6 9-6" />
-    </svg>
   );
 }
 
@@ -284,9 +262,9 @@ function About() {
     >
       <Title>About me</Title>
 
-      <div className="mt-10 grid items-start gap-8 md:grid-cols-[260px_1fr]">
+      <div className="mt-10 grid items-start gap-8 md:grid-cols-[260px_1fr] md:items-stretch">
         {/* picture holder: the frame grows and an outline slides out as you scroll */}
-        <div className="relative mx-auto w-full max-w-[260px] md:mx-0">
+        <div className="relative mx-auto w-full max-w-[260px] md:mx-0 md:h-full">
           <motion.div
             aria-hidden="true"
             style={{ x: reduce ? 12 : shift, y: reduce ? 12 : shift }}
@@ -294,7 +272,7 @@ function About() {
           />
           <motion.div
             style={{ scale: reduce ? 1 : scale }}
-            className="relative aspect-[4/5] overflow-hidden rounded-xl bg-gradient-to-br from-[#d9d8d4] to-[#b9b8b4]"
+            className="relative aspect-[4/5] overflow-hidden rounded-xl bg-gradient-to-br from-[#d9d8d4] to-[#b9b8b4] md:aspect-auto md:h-full"
           >
             {photoOk ? (
               // eslint-disable-next-line @next/next/no-img-element
@@ -307,7 +285,7 @@ function About() {
                 src={PHOTO}
                 alt={NAME}
                 onError={() => setPhotoOk(false)}
-                className="h-full w-full object-contain object-bottom contrast-[1.05] grayscale"
+                className="h-full w-full object-cover object-top contrast-[1.05] grayscale"
               />
             ) : (
               <div className="flex h-full w-full items-center justify-center text-xs uppercase tracking-[0.3em] text-[#55554f]">
@@ -488,15 +466,6 @@ function Portfolio() {
                       LinkedIn
                     </a>
                   </li>
-                  <li>
-                    <a
-                      href={`mailto:${EMAIL}`}
-                      className="flex items-center gap-2 transition-opacity hover:opacity-60"
-                    >
-                      <MailIcon />
-                      {EMAIL}
-                    </a>
-                  </li>
                 </ul>
               </motion.div>
             </div>
@@ -512,15 +481,16 @@ function Portfolio() {
           >
             <div className="flex flex-wrap items-end justify-between gap-4">
               <div>
+                <Title>Technical skills</Title>
                 <Reveal delay={0.1}>
-                  <p className="mt-2  text-ink/70">
+                  <p className="mt-4 max-w-md text-ink/80">
                     The technologies I use to build web applications, from the
                     interface to the database.
                   </p>
                 </Reveal>
               </div>
               <Link href="/tech-stack" className={linkLine}>
-                View full →
+                View full tech stack →
               </Link>
             </div>
 
@@ -567,73 +537,42 @@ function Portfolio() {
             </ul>
           </section>
 
-          {/* ============ EDUCATION ============ */}
+          {/* ============ CERTIFICATIONS ============ */}
           <section
-            id="education"
+            id="certifications"
             className="scroll-mt-4 border-t border-ink/20 py-16"
           >
-            <Title>Education</Title>
+            <Title>Certifications</Title>
 
-            <ul className="mt-10">
-              {education.map((item) => (
-                <li key={item.degree} className="border-t border-ink/40">
-                  <Reveal>
-                    <div className="group -mx-4 grid gap-3 px-4 py-8 transition-colors duration-300 hover:bg-ink hover:text-chalk sm:grid-cols-[200px_1fr]">
-                      <p className="text-sm font-semibold uppercase tracking-[0.1em]">
-                        {item.period}
-                      </p>
+            <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {certifications.map((cert, i) => (
+                <li key={`${cert.title}-${i}`} className="h-full">
+                  <Reveal delay={i * 0.1} className="h-full">
+                    <a
+                      href={cert.href}
+                      className="group flex h-full flex-col justify-between gap-10 rounded-xl border border-ink/30 p-6 transition-colors duration-300 hover:bg-ink hover:text-chalk"
+                    >
                       <div>
-                        <h3 className="text-xl font-semibold sm:text-2xl">
-                          {item.degree}
+                        <p className="text-sm font-semibold uppercase tracking-[0.1em]">
+                          {cert.year}
+                        </p>
+                        <h3 className="mt-6 text-xl font-semibold">
+                          {cert.title}
                         </h3>
                         <p className="mt-2 text-ash transition-colors duration-300 group-hover:text-smoke">
-                          {item.school}
+                          {cert.issuer}
                         </p>
-                        <ul className="mt-3 space-y-1 text-sm text-ink/80 transition-colors duration-300 group-hover:text-chalk/80">
-                          {item.details.map((detail) => (
-                            <li key={detail}>{detail}</li>
-                          ))}
-                        </ul>
                       </div>
-                    </div>
-                  </Reveal>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          {/* ============ EXPERIENCE ============ */}
-          <section
-            id="experience"
-            className="scroll-mt-4 border-t border-ink/20 py-16"
-          >
-            <Title>Experience</Title>
-
-            <ul className="mt-10 border-b border-ink/40">
-              {experience.map((item) => (
-                <li
-                  key={`${item.role}-${item.org}`}
-                  className="border-t border-ink/40"
-                >
-                  <Reveal>
-                    <div className="group -mx-4 grid gap-3 px-4 py-8 transition-colors duration-300 hover:bg-ink hover:text-chalk sm:grid-cols-[200px_1fr]">
-                      <p className="text-sm font-semibold uppercase tracking-[0.1em]">
-                        {item.period}
-                      </p>
-                      <div>
-                        <h3 className="text-xl font-semibold sm:text-2xl">
-                          {item.role}
-                        </h3>
-                        <p className="mt-2 text-ash transition-colors duration-300 group-hover:text-smoke">
-                          {item.org}
-                        </p>
-                        <ul className="mt-3 space-y-1 text-sm text-ink/80 transition-colors duration-300 group-hover:text-chalk/80">
-                          {item.points.map((point) => (
-                            <li key={point}>{point}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
+                      <span className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.15em]">
+                        View certificate
+                        <span
+                          aria-hidden="true"
+                          className="text-lg transition-transform duration-300 group-hover:translate-x-2"
+                        >
+                          →
+                        </span>
+                      </span>
+                    </a>
                   </Reveal>
                 </li>
               ))}
@@ -665,18 +604,18 @@ function Portfolio() {
             </motion.h2>
 
             <Reveal delay={0.2}>
-              <a
-                href={`mailto:${EMAIL}`}
+              <Link
+                href="/contact"
                 className="group mt-10 flex items-center justify-between gap-6 border-y border-ink/40 py-5 text-lg font-medium transition-colors hover:bg-ink/5 sm:text-3xl"
               >
-                <span className="break-all">{EMAIL}</span>
+                <span>Send me an email</span>
                 <span
                   aria-hidden="true"
                   className="transition-transform duration-300 group-hover:translate-x-3"
                 >
                   →
                 </span>
-              </a>
+              </Link>
             </Reveal>
 
             <div className="mt-8 flex flex-wrap items-center gap-6">
