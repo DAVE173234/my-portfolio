@@ -22,12 +22,11 @@ const NAME = "Dave Dacillo";
 const EMAIL = "you@example.com";
 const GITHUB = "https://github.com/DAVE173234";
 const GITHUB_HANDLE = "@DAVE173234";
-const LINKEDIN = "#"; // replace with your LinkedIn link
-const PHOTO = "/dave.png"; // your photo, saved in the public folder (used in About me)
+const LINKEDIN = "https://www.linkedin.com/in/frenz-dave-dacillo-97970241a/"; // replace with your LinkedIn link
+const PHOTO = "/dave.jpg"; // your photo, saved in the public folder (used in About me)
 
 // About Me (one paragraph)
-const aboutText = `I’m ${NAME}, currently pursuing a Bachelor of Science in Information Technology. I’m interested in full-stack web development and mobile application development, and I have experience building academic and personal software projects, including a learning management system with separate student and faculty portals built with React and Laravel.`;
-
+const aboutText = `I’m ${NAME}, an aspiring full-stack web developer dedicated to building efficient, user-focused web applications. Alongside honing my skills in end-to-end web technologies, I actively explore the field of cybersecurity as an enthusiast.` ;
 // Projects / My Works
 const projects = [
   {
