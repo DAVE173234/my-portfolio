@@ -18,10 +18,10 @@ export default function ContactPage() {
         <SiteHeader href="/" />
 
         <div className="pt-8">
-          <h1 className="text-4xl font-bold uppercase leading-none tracking-tighter sm:text-5xl">
+          <h1 className="text-3xl font-bold uppercase leading-tight tracking-tight sm:text-4xl">
             Email
           </h1>
-          <p className="mt-5 text-ink/80">
+          <p className="mt-4 text-ink/75">
             I&apos;ll get back to you as soon as possible.
           </p>
         </div>

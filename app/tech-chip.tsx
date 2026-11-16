@@ -117,7 +117,7 @@ export function TechGroups({ groups }: { groups: TechGroup[] }) {
         {groups.map((group) => (
           <section
             key={group.title}
-            className="grid gap-4 border-t border-ink/20 py-8 md:grid-cols-[220px_1fr]"
+            className="grid gap-4 border-t border-ink/20 py-8 md:grid-cols-[170px_1fr]"
           >
             <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-ash">
               {group.title}

@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-sans: var(--font-inter), system-ui, sans-serif;
-  --font-mono: var(--font-fira), ui-monospace, monospace;
+  --font-sans: var(--font-gotham), system-ui, sans-serif;
+  --font-mono: var(--font-gotham), system-ui, sans-serif;
   --color-ink: var(--ink);
   --color-chalk: var(--chalk);
   --color-ash: var(--ash);
@@ -57,8 +57,21 @@ body {
   background-color: var(--paper);
   background-image: var(--page-gradient);
   color: var(--ink);
-  font-family: var(--font-inter), system-ui, sans-serif;
+  font-family: var(--font-gotham), system-ui, sans-serif;
+  font-size: 0.9375rem; /* 15px */
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Typography: balanced headings, no single words left alone on a line */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 ::selection {

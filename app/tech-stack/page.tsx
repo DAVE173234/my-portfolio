@@ -1,3 +1,4 @@
+// File: app/tech-stack/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
 import SiteHeader from "../site-header";
@@ -13,11 +14,14 @@ export const metadata: Metadata = {
 export default function TechStackPage() {
   return (
     <main className="min-h-screen text-ink">
-      <div className="mx-auto w-full max-w-[1240px] px-5 pb-16 sm:px-8 lg:w-[max(65vw,880px)] lg:px-0">
+      <div className="mx-auto w-full max-w-[720px] px-5 pb-16 sm:px-6">
         <SiteHeader href="/" />
 
         <div className="pb-12 pt-8">
-          <p className="mt-5 text-ink/80">
+          <h1 className="text-3xl font-bold uppercase leading-tight tracking-tight sm:text-4xl">
+            Tech Stack
+          </h1>
+          <p className="mt-4 max-w-md text-ink/75">
             The technologies I use to build web applications, from the
             interface to the database.
           </p>
@@ -27,7 +31,7 @@ export default function TechStackPage() {
 
         <Link
           href="/#skills"
-          className="mt-30 inline-block border-b border-current pb-1 text-xs font-semibold uppercase tracking-[0.15em] transition-opacity hover:opacity-60"
+          className="mt-10 inline-block border-b border-current pb-1 text-xs font-semibold uppercase tracking-[0.15em] transition-opacity hover:opacity-60"
         >
           ← Back to portfolio
         </Link>

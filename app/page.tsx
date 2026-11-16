@@ -20,7 +20,7 @@ import { techGroups } from "./tech-data";
 
 // ---------- EDIT YOUR CONTENT HERE ----------
 const NAME = "Dave Dacillo";
-const PHOTO = "/dave.jpg"; // your photo, saved in the public folder (used in About me)
+const PHOTOS = ["/dave.jpg", "/dave.png", "/dave.jpeg", "/dave.webp"]; // save your photo in the public folder as dave.jpg (or one of these names)
 
 // About Me (one paragraph)
 const aboutText = `I’m ${NAME}, an aspiring full-stack web developer dedicated to building efficient, user-focused web applications. Alongside honing my skills in end-to-end web technologies, I actively explore the field of cybersecurity as an enthusiast.`;
@@ -29,6 +29,7 @@ const aboutText = `I’m ${NAME}, an aspiring full-stack web developer dedicated
 const projects = [
   {
     title: "Learning Management System",
+    category: "Web app / Education",
     stack: "React, Laravel, MySQL",
     description:
       "Student and faculty portals for managing courses, lessons, and records. My capstone project.",
@@ -37,6 +38,7 @@ const projects = [
   },
   {
     title: "Project two",
+    category: "Category / Type",
     stack: "Next.js, Tailwind CSS",
     description: "Replace this with a short description of what it does.",
     href: "#",
@@ -44,6 +46,7 @@ const projects = [
   },
   {
     title: "Project three",
+    category: "Category / Type",
     stack: "PHP, MySQL",
     description: "Replace this with a short description of what it does.",
     href: "#",
@@ -81,9 +84,7 @@ const moreTechCount = allTech.length - featuredTech.length;
 
 const label = "text-xs font-medium uppercase tracking-[0.3em]";
 const sectionTitle =
-  "text-3xl font-bold uppercase leading-none tracking-tighter sm:text-4xl lg:text-5xl";
-const buttonDark =
-  "inline-block bg-ink px-8 py-4 text-xs font-semibold uppercase tracking-[0.15em] text-chalk transition-opacity hover:opacity-80";
+  "text-2xl font-bold uppercase leading-tight tracking-tight sm:text-3xl";
 const linkLine =
   "border-b border-current pb-1 text-xs font-semibold uppercase tracking-[0.15em] transition-opacity hover:opacity-60";
 
@@ -192,52 +193,46 @@ function ProjectCard({
   wide?: boolean;
 }) {
   return (
-    <a href={project.href} className="group block">
-      <div
-        className={`relative overflow-hidden rounded-xl bg-gradient-to-br from-[#d9d8d4] to-[#b9b8b4] ${
-          wide ? "aspect-[4/3] sm:aspect-[16/9] lg:aspect-[4/3]" : "aspect-[4/3]"
-        }`}
-      >
-        {project.image ? (
-          <div
-            className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-            style={{ backgroundImage: `url(${project.image})` }}
-          />
-        ) : null}
-
-        {/* dark cover that fades in on hover */}
-        <span
+    <a
+      href={project.href}
+      className={`group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-ink/25 bg-gradient-to-br from-ink/[0.07] to-ink/[0.02] p-6 transition-colors duration-300 hover:border-ink/60 ${
+        wide ? "min-h-[210px]" : "min-h-[230px]"
+      }`}
+    >
+      {/* screenshot on the right, or a faint number until you add one */}
+      {project.image ? (
+        <div
           aria-hidden="true"
-          className="absolute inset-0 bg-[#0f0f0f] opacity-0 transition-opacity duration-500 group-hover:opacity-90"
+          className="pointer-events-none absolute inset-y-0 right-0 w-1/2 bg-cover bg-center opacity-60 transition-transform duration-700 [mask-image:linear-gradient(to_left,black,transparent)] group-hover:scale-105"
+          style={{ backgroundImage: `url(${project.image})` }}
         />
-
+      ) : (
         <span
           aria-hidden="true"
-          className="absolute left-4 top-2 text-6xl font-bold tracking-tighter text-black/20 transition-colors duration-500 group-hover:text-white/30"
+          className="pointer-events-none absolute right-6 top-4 text-6xl font-bold tracking-tight text-ink/[0.07] transition-transform duration-500 group-hover:scale-110"
         >
           {String(index + 1).padStart(2, "0")}
         </span>
+      )}
 
-        {project.image ? null : (
-          <span className="absolute inset-x-0 top-1/2 -translate-y-1/2 text-center text-xs uppercase tracking-[0.3em] text-[#55554f] transition-colors duration-500 group-hover:text-[#b9b9b6]">
-            Add a screenshot
-          </span>
-        )}
+      <p className="relative text-[11px] font-semibold uppercase tracking-[0.15em] text-ash">
+        {project.category}
+      </p>
 
-        <span className="absolute inset-x-4 bottom-4 flex items-center justify-between text-xs font-semibold uppercase tracking-[0.15em] text-black transition-colors duration-500 group-hover:text-white">
-          View project
-          <span
-            aria-hidden="true"
-            className="text-lg transition-transform duration-500 group-hover:translate-x-2"
-          >
-            →
-          </span>
-        </span>
+      <div className="relative mt-8 pr-12">
+        <h3 className="text-xl font-semibold">{project.title}</h3>
+        <p className="mt-2 max-w-md text-sm leading-relaxed text-ash">
+          {project.description}
+        </p>
+        <p className="mt-3 text-xs font-medium text-ink/70">{project.stack}</p>
       </div>
 
-      <h3 className="mt-4 text-lg font-semibold">{project.title}</h3>
-      <p className="mt-1 text-sm text-ash">{project.stack}</p>
-      <p className="mt-2 text-sm text-ink/80">{project.description}</p>
+      <span
+        aria-hidden="true"
+        className="absolute bottom-5 right-5 grid h-9 w-9 place-items-center rounded-full bg-ink text-chalk transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
+      >
+        ↗
+      </span>
     </a>
   );
 }
@@ -245,7 +240,8 @@ function ProjectCard({
 function About() {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion() ?? false;
-  const [photoOk, setPhotoOk] = useState(true);
+  const [photoIndex, setPhotoIndex] = useState(0);
+  const photo = PHOTOS[photoIndex];
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -262,9 +258,9 @@ function About() {
     >
       <Title>About me</Title>
 
-      <div className="mt-10 grid items-start gap-8 md:grid-cols-[260px_1fr] md:items-stretch">
+      <div className="mt-8 grid items-start gap-8 md:grid-cols-[200px_1fr] md:items-stretch">
         {/* picture holder: the frame grows and an outline slides out as you scroll */}
-        <div className="relative mx-auto w-full max-w-[260px] md:mx-0 md:h-full">
+        <div className="relative mx-auto w-full max-w-[200px] md:mx-0 md:h-full">
           <motion.div
             aria-hidden="true"
             style={{ x: reduce ? 12 : shift, y: reduce ? 12 : shift }}
@@ -274,17 +270,20 @@ function About() {
             style={{ scale: reduce ? 1 : scale }}
             className="relative aspect-[4/5] overflow-hidden rounded-xl bg-gradient-to-br from-[#d9d8d4] to-[#b9b8b4] md:aspect-auto md:h-full"
           >
-            {photoOk ? (
+            {photo ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
+                key={photo}
                 ref={(el) => {
                   if (el && el.complete && el.naturalWidth === 0) {
-                    setPhotoOk(false);
+                    setPhotoIndex((i) => (PHOTOS[i] === photo ? i + 1 : i));
                   }
                 }}
-                src={PHOTO}
+                src={photo}
                 alt={NAME}
-                onError={() => setPhotoOk(false)}
+                onError={() =>
+                  setPhotoIndex((i) => (PHOTOS[i] === photo ? i + 1 : i))
+                }
                 className="h-full w-full object-cover object-top contrast-[1.05] grayscale"
               />
             ) : (
@@ -317,7 +316,7 @@ function Portfolio() {
 
       <div className="min-h-screen text-ink">
         {/* everything lives in one centered column with wide side margins */}
-        <div className="mx-auto w-full max-w-[1240px] px-5 sm:px-8 lg:w-[max(65vw,880px)] lg:px-0">
+        <div className="mx-auto w-full max-w-[720px] px-5 sm:px-6">
           <SiteHeader href="#top" />
 
           {/* ============ HOME / INTRODUCTION ============ */}
@@ -391,7 +390,7 @@ function Portfolio() {
 
               {/* your name as the title */}
               <div className="absolute left-[6%] top-[38%] z-20">
-                <h1 className="text-[11cqw] font-bold leading-none tracking-tight text-ink">
+                <h1 className="text-[9.5cqw] font-bold leading-none tracking-tight text-ink">
                   <span className="sr-only">{NAME}</span>
                   <span aria-hidden="true">
                     {NAME.split(" ").map((word, wi, words) => {
@@ -480,21 +479,13 @@ function Portfolio() {
             className="scroll-mt-4 border-t border-ink/20 py-16"
           >
             <div className="flex flex-wrap items-end justify-between gap-4">
-              <div>
-                <Title>Technical skills</Title>
-                <Reveal delay={0.1}>
-                  <p className="mt-4 max-w-md text-ink/80">
-                    The technologies I use to build web applications, from the
-                    interface to the database.
-                  </p>
-                </Reveal>
-              </div>
+              <Title>Technical skills</Title>
               <Link href="/tech-stack" className={linkLine}>
                 View full tech stack →
               </Link>
             </div>
 
-            <div className="mt-10">
+            <div className="mt-8">
               <TechChips items={featuredTech} moreCount={moreTechCount} />
             </div>
           </section>
@@ -508,7 +499,7 @@ function Portfolio() {
               <div>
                 <Title>Projects / My works</Title>
                 <Reveal delay={0.2}>
-                  <p className="mt-4 max-w-md text-ink/80">
+                  <p className="mt-4 max-w-lg text-balance text-ink/75">
                     Selected projects, from academic work to personal builds.
                   </p>
                 </Reveal>
@@ -523,13 +514,10 @@ function Portfolio() {
               </a>
             </div>
 
-            <ul className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="mt-8 grid gap-4 sm:grid-cols-2">
               {projects.map((project, i) => (
-                <li
-                  key={project.title}
-                  className={i === 0 ? "sm:col-span-2 lg:col-span-1" : ""}
-                >
-                  <Reveal delay={i * 0.12}>
+                <li key={project.title} className={i === 0 ? "sm:col-span-2" : ""}>
+                  <Reveal delay={i * 0.1}>
                     <ProjectCard project={project} index={i} wide={i === 0} />
                   </Reveal>
                 </li>
@@ -544,34 +532,23 @@ function Portfolio() {
           >
             <Title>Certifications</Title>
 
-            <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="mt-8 border-b border-ink/20">
               {certifications.map((cert, i) => (
-                <li key={`${cert.title}-${i}`} className="h-full">
-                  <Reveal delay={i * 0.1} className="h-full">
+                <li key={`${cert.title}-${i}`} className="border-t border-ink/20">
+                  <Reveal delay={i * 0.08}>
                     <a
                       href={cert.href}
-                      className="group flex h-full flex-col justify-between gap-10 rounded-xl border border-ink/30 p-6 transition-colors duration-300 hover:bg-ink hover:text-chalk"
+                      className="group -mx-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 px-4 py-6 transition-colors duration-300 hover:bg-ink hover:text-chalk"
                     >
-                      <div>
-                        <p className="text-sm font-semibold uppercase tracking-[0.1em]">
-                          {cert.year}
-                        </p>
-                        <h3 className="mt-6 text-xl font-semibold">
-                          {cert.title}
-                        </h3>
-                        <p className="mt-2 text-ash transition-colors duration-300 group-hover:text-smoke">
+                      <div className="min-w-0">
+                        <h3 className="text-base font-semibold">{cert.title}</h3>
+                        <p className="mt-1 text-sm text-ash transition-colors duration-300 group-hover:text-smoke">
                           {cert.issuer}
                         </p>
                       </div>
-                      <span className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.15em]">
-                        View certificate
-                        <span
-                          aria-hidden="true"
-                          className="text-lg transition-transform duration-300 group-hover:translate-x-2"
-                        >
-                          →
-                        </span>
-                      </span>
+                      <p className="text-xs font-semibold uppercase tabular-nums tracking-[0.1em] text-ash transition-colors duration-300 group-hover:text-smoke">
+                        {cert.year}
+                      </p>
                     </a>
                   </Reveal>
                 </li>
@@ -585,11 +562,12 @@ function Portfolio() {
             className="scroll-mt-4 border-t border-ink/20 py-16"
           >
             <p className={label}>Contact me</p>
+
             <motion.h2
               initial="hidden"
               whileInView="show"
               viewport={{ once: true }}
-              className="mt-5 text-4xl font-bold uppercase leading-[0.95] tracking-tighter sm:text-6xl lg:text-7xl"
+              className="mt-4 text-3xl font-bold uppercase leading-[1.1] tracking-tight sm:text-4xl"
             >
               <span className="block overflow-hidden pb-[0.08em]">
                 <motion.span variants={maskUp} className="block">
@@ -603,10 +581,17 @@ function Portfolio() {
               </span>
             </motion.h2>
 
+            <Reveal delay={0.3}>
+              <p className="mt-4 max-w-md text-ink/75">
+                Have a project, an opportunity, or a question? Send me a
+                message and I&apos;ll get back to you as soon as possible.
+              </p>
+            </Reveal>
+
             <Reveal delay={0.2}>
               <Link
                 href="/contact"
-                className="group mt-10 flex items-center justify-between gap-6 border-y border-ink/40 py-5 text-lg font-medium transition-colors hover:bg-ink/5 sm:text-3xl"
+                className="group mt-8 flex items-center justify-between gap-6 border-y border-ink/40 py-5 text-base font-medium transition-colors hover:bg-ink/5 sm:text-xl"
               >
                 <span>Send me an email</span>
                 <span
@@ -617,25 +602,8 @@ function Portfolio() {
                 </span>
               </Link>
             </Reveal>
-
-            <div className="mt-8 flex flex-wrap items-center gap-6">
-              <a
-                href={GITHUB}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={buttonDark}
-              >
-                GitHub
-              </a>
-              <a href={LINKEDIN} className={linkLine}>
-                LinkedIn
-              </a>
-            </div>
           </section>
 
-          <footer className="border-t border-ink/20 py-8 text-xs uppercase tracking-[0.15em] text-ash">
-            © 2026 {NAME}. Built with Next.js.
-          </footer>
         </div>
       </div>
     </MotionConfig>

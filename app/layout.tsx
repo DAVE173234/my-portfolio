@@ -1,14 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Fira_Code } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const fira = Fira_Code({
-  variable: "--font-fira",
+// Gotham is a paid font, so Montserrat (the closest free match) is used for the whole site.
+// If you own Gotham, it can be swapped in here without touching any other file.
+const gotham = Montserrat({
+  variable: "--font-gotham",
   subsets: ["latin"],
 });
 
@@ -30,8 +27,9 @@ export default function RootLayout({
     <html
       lang="en"
       data-theme="dark"
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
-      className={`${inter.variable} ${fira.variable}`}
+      className={gotham.variable}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
