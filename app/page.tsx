@@ -13,6 +13,8 @@ import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import Computer from "./computer";
 import Intro from "./intro";
+import ProjectCard from "./project-card";
+import { projects } from "./projects-data";
 import SiteHeader from "./site-header";
 import { TechChips } from "./tech-chip";
 import { GITHUB, GITHUB_HANDLE, LINKEDIN } from "./site-config";
@@ -24,35 +26,6 @@ const PHOTOS = ["/dave.jpg", "/dave.png", "/dave.jpeg", "/dave.webp"]; // save y
 
 // About Me (one paragraph)
 const aboutText = `I’m ${NAME}, an aspiring full-stack web developer dedicated to building efficient, user-focused web applications. Alongside honing my skills in end-to-end web technologies, I actively explore the field of cybersecurity as an enthusiast.`;
-
-// Projects / My Works
-const projects = [
-  {
-    title: "Learning Management System",
-    category: "Web app / Education",
-    stack: "React, Laravel, MySQL",
-    description:
-      "Student and faculty portals for managing courses, lessons, and records. My capstone project.",
-    href: "#", // replace with your live demo or GitHub repo
-    image: "", // optional screenshot, e.g. "/lms.png" in the public folder
-  },
-  {
-    title: "Project two",
-    category: "Category / Type",
-    stack: "Next.js, Tailwind CSS",
-    description: "Replace this with a short description of what it does.",
-    href: "#",
-    image: "",
-  },
-  {
-    title: "Project three",
-    category: "Category / Type",
-    stack: "PHP, MySQL",
-    description: "Replace this with a short description of what it does.",
-    href: "#",
-    image: "",
-  },
-];
 
 // Certifications (copy a block to add more)
 const certifications = [
@@ -180,60 +153,6 @@ function Title({ children }: { children: ReactNode }) {
         </motion.span>
       </span>
     </motion.h2>
-  );
-}
-
-function ProjectCard({
-  project,
-  index,
-  wide = false,
-}: {
-  project: (typeof projects)[number];
-  index: number;
-  wide?: boolean;
-}) {
-  return (
-    <a
-      href={project.href}
-      className={`group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-ink/25 bg-gradient-to-br from-ink/[0.07] to-ink/[0.02] p-6 transition-colors duration-300 hover:border-ink/60 ${
-        wide ? "min-h-[210px]" : "min-h-[230px]"
-      }`}
-    >
-      {/* screenshot on the right, or a faint number until you add one */}
-      {project.image ? (
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 right-0 w-1/2 bg-cover bg-center opacity-60 transition-transform duration-700 [mask-image:linear-gradient(to_left,black,transparent)] group-hover:scale-105"
-          style={{ backgroundImage: `url(${project.image})` }}
-        />
-      ) : (
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute right-6 top-4 text-6xl font-bold tracking-tight text-ink/[0.07] transition-transform duration-500 group-hover:scale-110"
-        >
-          {String(index + 1).padStart(2, "0")}
-        </span>
-      )}
-
-      <p className="relative text-[11px] font-semibold uppercase tracking-[0.15em] text-ash">
-        {project.category}
-      </p>
-
-      <div className="relative mt-8 pr-12">
-        <h3 className="text-xl font-semibold">{project.title}</h3>
-        <p className="mt-2 max-w-md text-sm leading-relaxed text-ash">
-          {project.description}
-        </p>
-        <p className="mt-3 text-xs font-medium text-ink/70">{project.stack}</p>
-      </div>
-
-      <span
-        aria-hidden="true"
-        className="absolute bottom-5 right-5 grid h-9 w-9 place-items-center rounded-full bg-ink text-chalk transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
-      >
-        ↗
-      </span>
-    </a>
   );
 }
 
@@ -504,14 +423,9 @@ function Portfolio() {
                   </p>
                 </Reveal>
               </div>
-              <a
-                href={GITHUB}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={linkLine}
-              >
+              <Link href="/projects" className={linkLine}>
                 View all →
-              </a>
+              </Link>
             </div>
 
             <ul className="mt-8 grid gap-4 sm:grid-cols-2">
