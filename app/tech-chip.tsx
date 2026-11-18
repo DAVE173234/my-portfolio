@@ -24,6 +24,10 @@ const item: Variants = {
 const chipClass =
   "group inline-flex items-center gap-2 rounded-md border border-ink/30 bg-ink/5 px-4 py-2 text-sm font-medium text-ink transition-colors duration-200 hover:bg-ink hover:text-chalk";
 
+// Same chip without the hover effect, for places where it is not clickable
+const chipPlainClass =
+  "inline-flex items-center gap-2 rounded-md border border-ink/30 bg-ink/5 px-4 py-2 text-sm font-medium text-ink";
+
 // Plain </> icon, used when a technology has no logo
 function CodeGlyph() {
   return (
@@ -65,9 +69,15 @@ function Logo({ slugs }: { slugs: string[] }) {
   );
 }
 
-function TechChip({ tech }: { tech: Tech }) {
+export function TechChip({
+  tech,
+  plain = false,
+}: {
+  tech: Tech;
+  plain?: boolean;
+}) {
   return (
-    <span className={chipClass}>
+    <span className={plain ? chipPlainClass : chipClass}>
       <Logo slugs={tech.slugs ?? []} />
       {tech.name}
     </span>
