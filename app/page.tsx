@@ -11,6 +11,8 @@ import {
 } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import CertificationCard from "./certification-card";
+import { certifications } from "./certifications-data";
 import Computer from "./computer";
 import Intro from "./intro";
 import ProjectCard from "./project-card";
@@ -27,27 +29,6 @@ const PHOTOS = ["/dave.jpg", "/dave.png", "/dave.jpeg", "/dave.webp"]; // save y
 // About Me (one paragraph)
 const aboutText = `I’m ${NAME}, an aspiring full-stack web developer dedicated to building efficient, user-focused web applications. Alongside honing my skills in end-to-end web technologies, I actively explore the field of cybersecurity as an enthusiast.`;
 
-// Certifications (copy a block to add more)
-const certifications = [
-  {
-    title: "Certification name",
-    issuer: "Issuing organization",
-    year: "20XX",
-    href: "#", // link to the certificate, if you have one
-  },
-  {
-    title: "Certification name",
-    issuer: "Issuing organization",
-    year: "20XX",
-    href: "#",
-  },
-  {
-    title: "Certification name",
-    issuer: "Issuing organization",
-    year: "20XX",
-    href: "#",
-  },
-];
 // --------------------------------------------
 
 // Short summary of the tech stack for the home page (edit the full list in tech-data.ts)
@@ -446,28 +427,11 @@ function Portfolio() {
           >
             <Title>Certifications</Title>
 
-            <ul className="mt-8 border-b border-ink/20">
-              {certifications.map((cert, i) => (
-                <li key={`${cert.title}-${i}`} className="border-t border-ink/20">
-                  <Reveal delay={i * 0.08}>
-                    <a
-                      href={cert.href}
-                      className="group -mx-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 px-4 py-6 transition-colors duration-300 hover:bg-ink hover:text-chalk"
-                    >
-                      <div className="min-w-0">
-                        <h3 className="text-base font-semibold">{cert.title}</h3>
-                        <p className="mt-1 text-sm text-ash transition-colors duration-300 group-hover:text-smoke">
-                          {cert.issuer}
-                        </p>
-                      </div>
-                      <p className="text-xs font-semibold uppercase tabular-nums tracking-[0.1em] text-ash transition-colors duration-300 group-hover:text-smoke">
-                        {cert.year}
-                      </p>
-                    </a>
-                  </Reveal>
-                </li>
+            <div className="mt-8 space-y-4">
+              {certifications.map((cert) => (
+                <CertificationCard key={cert.title} cert={cert} />
               ))}
-            </ul>
+            </div>
           </section>
 
           {/* ============ CONTACT ME ============ */}
