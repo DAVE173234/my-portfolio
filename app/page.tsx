@@ -425,7 +425,12 @@ function Portfolio() {
             id="certifications"
             className="scroll-mt-4 border-t border-ink/20 py-16"
           >
-            <Title>Certifications</Title>
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <Title>Certifications</Title>
+              <Link href="/certifications" className={linkLine}>
+                View all →
+              </Link>
+            </div>
 
             <div className="mt-8 space-y-4">
               {certifications.map((cert) => (
