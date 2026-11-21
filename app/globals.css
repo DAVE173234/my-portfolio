@@ -84,6 +84,63 @@ p {
   outline-offset: 4px;
 }
 
+/* Theme change: the new colors spread out from the switch */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
+}
+
+/* Fallback for older browsers: colors fade smoothly */
+html.theme-fade *,
+html.theme-fade *::before,
+html.theme-fade *::after {
+  transition:
+    background-color 0.8s ease,
+    color 0.8s ease,
+    border-color 0.8s ease,
+    fill 0.8s ease,
+    stroke 0.8s ease !important;
+}
+
+/* Form fields show their focus with the border color, not a second ring */
+input:focus-visible,
+textarea:focus-visible {
+  outline: none;
+}
+
+/* Form fields: what the visitor types, and what the browser fills in
+   (like a saved email), stays readable in both themes */
+input,
+textarea {
+  color: var(--ink);
+  caret-color: var(--ink);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill {
+  -webkit-text-fill-color: var(--ink);
+  caret-color: var(--ink);
+  box-shadow: 0 0 0 1000px color-mix(in srgb, var(--ink) 6%, var(--paper)) inset;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+input:autofill,
+textarea:autofill {
+  color: var(--ink);
+  background-color: color-mix(in srgb, var(--ink) 6%, var(--paper));
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

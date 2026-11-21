@@ -284,7 +284,7 @@ function Portfolio() {
                   strong nation: I the LORD will hasten it in his time.”
                 </blockquote>
                 <figcaption className="mt-3 text-[11px] uppercase tracking-[0.2em]">
-                  Isaiah 60:22 · KJV
+                  Isaiah 60:22 
                 </figcaption>
               </motion.figure>
 
