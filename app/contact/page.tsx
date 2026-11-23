@@ -29,7 +29,7 @@ export default function ContactPage() {
         <ContactForm />
 
         <p className="mt-10 text-center text-sm text-ash">
-          Note: if you want to send me an email directly, send it at
+          Note: if you want to send me an email directly, send it at {" "}
           <a
             href={`mailto:${EMAIL}`}
             className="font-medium text-ink underline underline-offset-4"
