@@ -6,8 +6,6 @@ import {
   MAX_TOTAL_BYTES,
 } from "../../contact-limits";
 
-export const runtime = "nodejs";
-
 function reply(body: object, status = 200) {
   return Response.json(body, { status });
 }
